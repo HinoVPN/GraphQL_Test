@@ -1,7 +1,8 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-import AllUser from './allUser';
+import AllUser from './AllUser';
+import Routing from './NavBar';
 
 
 function App() {
@@ -10,7 +11,8 @@ function App() {
       <div>
         <h2>My first Apollo app 🚀</h2>
         <br/>
-        <AllUser />
+          <Routing />
+          {/* <AllUser /> */}
       </div>
     </div>
   );
