@@ -1,0 +1,11 @@
+{
+    "watch": ["src"],
+    "ext": ".ts,.js",
+    "ignore": [],
+    "exec": "ts-node --files ./src/index.ts",
+    "env":{
+        "MONGO_USER":"Hino",
+        "MONGO_PASSWORD":"Hino6192001",
+        "MONGO_DB": "GraphqlTest"
+    }
+}

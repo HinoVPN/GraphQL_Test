@@ -1,0 +1,52 @@
+// import { ApolloServer, gql } from "apollo-server";
+const { ApolloServer, gql } = require('apollo-server');
+
+const books = [
+    {
+        id: 1,
+        title: 'Harry Potter and the Chamber',
+        author: 'J.K. Rowling',
+    },
+    {
+        id: 2,
+        title: 'Jurassic Park',
+        author: 'Michael Crichton',
+    },
+];
+
+const typeDefs = gql`
+  type Book {
+    id: Int
+    title: String
+    author: String
+  }
+
+  type Query {
+    getBooks: [Book]
+    getBookById(id: Int): Book
+  }
+
+  type Mutation {
+    addBook(title: String, author: String): Book
+  }
+`;
+
+const resolvers = {
+    Query: {
+        getBooks: () => books,
+        getBookById: (parent:any, args:any) => books.find(book => {return book.id == args.id}),
+    },
+    
+};
+
+const server = new ApolloServer({ 
+    typeDefs, 
+    resolvers 
+});
+
+server.listen(4000,() => {
+  console.log(`Server ready at localhost:4000`);
+});
+
+
+export default server;
