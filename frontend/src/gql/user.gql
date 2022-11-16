@@ -1,0 +1,23 @@
+fragment userData on User {
+    createdAt
+    lastUpdateAt
+    _id
+    name
+    phone
+    email
+    password
+    country
+}
+
+
+query allUser {
+    allUser {
+        ...userData
+    }
+}
+
+mutation addUser($userInfo: UserInput!) {
+    addUser(input: $userInfo) {
+        ...userData
+    }
+}

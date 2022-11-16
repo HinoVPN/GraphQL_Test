@@ -8,6 +8,7 @@ const getAllUser = gql`
         allUser {
         _id
         name
+        email
         }
     }
 `;
@@ -29,12 +30,12 @@ function AllUser() {
     return(
         <Container className="col-md-5">
             {
-                data.allUser.map(({_id, name}:{_id:string, name:string}) => {
+                data.allUser.map(({_id, name, email}:{_id:string, name:string, email:string}) => {
                     return(
                         <Card key={_id}>
-                            <Card.Header as="h5">Featured</Card.Header>
+                            <Card.Header as="h5">{_id}</Card.Header>
                             <Card.Body>
-                                <Card.Title>{_id}</Card.Title>
+                                <Card.Title>{email}</Card.Title>
                                 <Card.Text>
                                     {name}
                                 </Card.Text>
@@ -44,6 +45,7 @@ function AllUser() {
                     )
                 })
             }
+            
             
         </Container>
     )

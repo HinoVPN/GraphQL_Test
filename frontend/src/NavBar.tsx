@@ -5,10 +5,12 @@ import Contact from './Contract/Contact';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
+import Footer from "./Footer";
 import AllUser from './AllUser';
+import CreateUserForm from './CreateUserForm';
 
 
-const Routing = () => {
+const NavBar = () => {
   const [isOpen, setOpen] = useState(false);
   return (
     <Router>
@@ -33,9 +35,9 @@ const Routing = () => {
         </Navbar>
 
         <Routes>
-                 <Route path='/' element={< AllUser />}></Route>
+                 <Route path='/' element={<>< AllUser /><Footer /></>}></Route>
                  <Route path='/about' element={< About />}></Route>
-                 <Route path='/contact' element={< Contact />}></Route>
+                 <Route path='/contact' element={< CreateUserForm />}></Route>
         </Routes>
     </Router>
 
@@ -43,4 +45,4 @@ const Routing = () => {
   );
 };
 
-export default Routing;
+export default NavBar;
