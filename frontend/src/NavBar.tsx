@@ -8,6 +8,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import Footer from "./Footer";
 import AllUser from './AllUser';
 import CreateUserForm from './CreateUserForm';
+import Register from './Register';
 
 
 const NavBar = () => {
@@ -29,6 +30,9 @@ const NavBar = () => {
                     <Nav.Link className="nav-item">
                         <Link className="nav-link" to="/contact">Contact</Link>
                     </Nav.Link>
+                    <Nav.Link className="nav-item">
+                        <Link className="nav-link" to="/register">Reigster</Link>
+                    </Nav.Link>
                 </Nav>
                 </Navbar.Collapse>
             </Container>
@@ -38,6 +42,7 @@ const NavBar = () => {
                  <Route path='/' element={<>< AllUser /><Footer /></>}></Route>
                  <Route path='/about' element={< About />}></Route>
                  <Route path='/contact' element={< CreateUserForm />}></Route>
+                 <Route path='/register' element={< Register />}></Route>
         </Routes>
     </Router>
 

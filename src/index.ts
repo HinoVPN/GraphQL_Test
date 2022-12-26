@@ -1,17 +1,17 @@
 import "reflect-metadata";
 import express from "express";
 import { buildSchema } from "type-graphql";
-import { UserResolver } from "./resoolver/userResolver";
 import { ApolloServer } from "apollo-server-express";
 import { ApolloServerPluginLandingPageGraphQLPlayground } from "apollo-server-core";
 import mongoose from "mongoose";
+import { resolvers } from "./resolvers/resolvers";
 
 const main = async () => {
     const app = express()
 
     const server = new ApolloServer({ 
         schema: await buildSchema({
-            resolvers: [UserResolver]
+            resolvers: resolvers
         }),
         context: ({req,res}) => ({req,res}),
         plugins: [

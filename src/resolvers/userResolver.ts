@@ -17,14 +17,14 @@ export class UserResolver{
 
     @Query(() => User)
     async findUser(
-        @Arg("_id") id: string
+        @Arg("_id") _id: string
     ) {
-        // return this.users.find((user:User) => user.id == id);
+        return UserModel.findById(_id).exec()
     }
 
     @Query(() => [User])
     async allUser() {   
         return UserModel.find().lean()
-        // return this.users
     }
+
 }
