@@ -1,50 +1,39 @@
-import { gql, useMutation } from '@apollo/client';
+import { gql, useLazyQuery, useMutation, useQuery } from '@apollo/client';
 import React, { useEffect, useRef, useState } from "react";
 import { Button } from "react-bootstrap";
 import { useNavigate } from 'react-router-dom';
-import "./Register.css"
+import "./global.css"
 
 // const USER_REGEX = /^[a-zA-Z][a-zA-Z0-9-_]{3,23}$/;
 // const PWD_REGEX = /^.*(?=.{6,})(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[!@# %^&*? ]).{8,24}$/;
 
 
-const Register = () =>{
+const Login = () =>{
     
-    const submit = gql`
-    mutation addUser($userInfo: UserInput!) {
-        addUser(userInfo: $userInfo) {
-            _id
-            name
-            email
-            password
-            country
-        }
+    const getUser = gql`
+        query login($email: String!, $password: String!) {
+            login(email: $email, password: $password) {
+                _id
+                name
+                email
+            }
         }
     `;
 
-    const [register, { data, loading, error }] = useMutation(submit);
+    const [login ,{ data, loading, error }] = useLazyQuery(getUser);
 
     const userRef = useRef<any>()
     const errRef = useRef<any>()
 
-    const [user, setUser] = useState("");
-    const [validName,setValidName] = useState(false);
-    const [userFocus, setUserFocus] = useState(false);
+    // const [user, setUser] = useState("");
+    // const [validName,setValidName] = useState(false);
+    // const [userFocus, setUserFocus] = useState(false);
 
     const [email, setEmail] = useState("")
-    
-    const [phone, setPhone] = useState("")
-
-    const [country,setCountry] = useState("")
-
 
     const [password, setPassword] = useState("");
     const [validPassword,setValidPassword] = useState(false);
     const [passwordFocus, setPasswordFocus] = useState(false);
-
-    const [matchPassword, setMatchPassword]= useState("");
-    const [validMatch,setValidMatch] = useState(false);
-    const [matchFocus, setMatchFocus] = useState(false);
 
     const [errMsg, setErrMsg] = useState("");
     const [success, setSuccess] = useState(false);
@@ -56,42 +45,37 @@ const Register = () =>{
             userRef.current.focus()
     }, [])
 
-    useEffect(()=>{
-        // const result = USER_REGEX.test(user);
-        const result = true
-        setValidName(result);
-    }, [user])
+    // useEffect(()=>{
+    //     // const result = USER_REGEX.test(user);
+    //     const result = true
+    //     setValidName(result);
+    // }, [user])
 
     useEffect(()=>{
         // const result = PWD_REGEX.test(password);
         const result = true
         setValidPassword(result)
-        const isMatch = password == matchPassword;
-        setValidMatch(isMatch)
-    }, [password, matchPassword])
+    }, [password])
 
-    useEffect(()=>{
-        setErrMsg('');
-    }, [user,password,matchPassword])
 
-    useEffect(() =>{
-        if(success)
-            navigate("/");
-    }, [success])
+    // useEffect(() =>{
+    //     if(success)
+    //         navigate("/");
+    // }, [success])
+
+    // useEffect(() =>{
+    //     console.log("hI")
+    // },[])
 
     const handleSubmit = async (e:any) => {
         e.preventDefault();
-        console.log(user,password,email,phone,country)
-
-        let data = {
-            name: user,
-            password,
-            email,
-            phone,
-            country
-        }
+        console.log(email,password)
 
         setSuccess(true)
+
+        login({variables:{email: email, password: password}}).then((res)=>{
+            console.log(res)
+        })
 
         // register({variables:{userInfo: data}}).then(()=>{
         //     setSuccess(true)
@@ -111,13 +95,11 @@ const Register = () =>{
                     <div className="loginRight">
                         <div className="card" style={{width: "500px"}}>
                             <div className="card-body">
-                                <h3 className="card-title">Register Yourself</h3>
-                                
                                 <form 
                                     onSubmit={handleSubmit}
                                     encType="multipart/form-data"
                                 >
-                                        <div className='mb-3'>
+                                        {/* <div className='mb-3'>
                                             <label htmlFor='username' className='form-label'>Username<span className='required'>*</span></label>
                                             <input 
                                                 type='text' 
@@ -134,7 +116,7 @@ const Register = () =>{
                                                 onBlur={() => setUserFocus(true)}
                                             />
                                             <p id="uidnote" className={userFocus && user && !validName ? "instructions":"offscreen"}>Error</p>
-                                        </div>
+                                        </div> */}
                                         
                                         <div className='mb-3'>
                                             <label htmlFor='email' className='form-label'>Email<span className='required'>*</span></label>
@@ -146,44 +128,6 @@ const Register = () =>{
                                                 ref={userRef}
                                                 autoComplete="off"
                                                 onChange={(e) => setEmail(e.target.value)}
-                                                required
-                                                // aria-invalid={validMatch ? "false" : "true"}
-                                                // aria-describedby="uidnote"
-                                                // onFocus={() => setMatchFocus(true)}
-                                                // onBlur={() => setMatchFocus(true)}
-                                            />
-                                            {/* <p id="uidnote" className={!validMatch && matchPassword && password? "instructions":"offscreen"}>Password Not Match!</p> */}
-                                        </div>
-
-                                        <div className='mb-3'>
-                                            <label htmlFor='phone' className='form-label'>Phone<span className='required'>*</span></label>
-                                            <input 
-                                                type='phone' 
-                                                className='form-control' 
-                                                id='phone' 
-                                                placeholder='Enter your phone'
-                                                ref={userRef}
-                                                autoComplete="off"
-                                                onChange={(e) => setPhone(e.target.value)}
-                                                required
-                                                // aria-invalid={validMatch ? "false" : "true"}
-                                                // aria-describedby="uidnote"
-                                                // onFocus={() => setMatchFocus(true)}
-                                                // onBlur={() => setMatchFocus(true)}
-                                            />
-                                            {/* <p id="uidnote" className={!validMatch && matchPassword && password? "instructions":"offscreen"}>Password Not Match!</p> */}
-                                        </div>
-
-                                        <div className='mb-3'>
-                                            <label htmlFor='email' className='form-label'>Country<span className='required'>*</span></label>
-                                            <input 
-                                                type='country' 
-                                                className='form-control' 
-                                                id='country' 
-                                                placeholder='Enter your country'
-                                                ref={userRef}
-                                                autoComplete="off"
-                                                onChange={(e) => setCountry(e.target.value)}
                                                 required
                                                 // aria-invalid={validMatch ? "false" : "true"}
                                                 // aria-describedby="uidnote"
@@ -212,36 +156,27 @@ const Register = () =>{
                                             <p id="uidnote" className={passwordFocus && password && !validPassword ? "instructions":"offscreen"}>Error</p>
                                         </div>
 
-                                        <div className='mb-3'>
-                                            <label htmlFor='comfirm_password' className='form-label'>Comfirm Password<span className='required'>*</span></label>
-                                            <input 
-                                                type='password' 
-                                                className='form-control' 
-                                                id='comfirm_password' 
-                                                placeholder='Enter your password'
-                                                ref={userRef}
-                                                autoComplete="off"
-                                                onChange={(e) => setMatchPassword(e.target.value)}
-                                                required
-                                                aria-invalid={validMatch ? "false" : "true"}
-                                                aria-describedby="uidnote"
-                                                onFocus={() => setMatchFocus(true)}
-                                                onBlur={() => setMatchFocus(true)}
-                                            />
-                                            <p id="uidnote" className={!validMatch && matchPassword && password? "instructions":"offscreen"}>Password Not Match!</p>
-                                        </div>
-
                                         <Button 
                                             disabled={
-                                                validMatch && validPassword && validName 
-                                                && user && password && matchPassword
-                                                ? false:true 
+                                                email && password? false:true 
                                             } 
                                             type="submit">
-                                                Register
+                                                Login
                                         </Button>
                                 </form>
+
+                                <div className="registerButton text-center d-flex flex-column">
+                                    <button type="button" className="btn btn-link">Forgotten password?</button>
+                                </div>
+                                <div className="container">
+                                    <hr className="bg-dark border-2 border-top border-dark"/>
+                                </div>
+                                <div className="container text-center d-flex justify-content-center">
+                                    <button type="button" onClick={()=>{navigate("/register")}} className="btn btn-success btn-lg">Create an account</button>
+                                </div>
+
                             </div>
+                            
                         </div>
                     </div>
                 </div>
@@ -250,4 +185,4 @@ const Register = () =>{
     )
 };
 
-export default Register;
+export default Login;

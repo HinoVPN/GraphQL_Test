@@ -1,5 +1,4 @@
 import { getModelForClass, pre, prop } from "@typegoose/typegoose";
-import { MaxLength } from "class-validator";
 import { ObjectId } from "mongoose";
 import { Field,ID,InputType,ObjectType } from "type-graphql";
 import { Base } from "./base";

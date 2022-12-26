@@ -1,0 +1,22 @@
+fragment noticeData on Notice {
+    _id
+    userId
+    title
+    type
+    lostDate
+    foundDate
+    found_user_id
+    description
+    venue
+    contact
+    imageDir
+}
+
+query allNotice {
+    allNotice {
+        ...noticeData
+        user{
+            ...userData
+        }
+    }
+}

@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 
-const About = () => {
+const Profile = () => {
   
 
   useEffect(() =>{
@@ -20,4 +20,4 @@ const About = () => {
   </div>
 )};
 
-export default About;
+export default Profile;

@@ -1,6 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 
-const Contact = () => (
+const Contact = () => {
+  
+
+  useEffect(() =>{
+        console.log("hI")
+  },[])
+  
+  return(
+  
   <div>
     <h1 className="title is-1">This is the Contact Page</h1>
     <p>
@@ -10,6 +18,6 @@ const Contact = () => (
       in efficitur arcu congue. Nam fermentum commodo egestas.
     </p>
   </div>
-);
+)};
 
 export default Contact;

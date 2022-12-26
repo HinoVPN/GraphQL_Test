@@ -1,4 +1,5 @@
 import { useQuery, gql } from '@apollo/client';
+import { useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Container from 'react-bootstrap/Container';
@@ -21,11 +22,17 @@ const UserCards = (data:[]) => {
     // ))
 }
 
+
+
 function AllUser() {
     const { loading, error, data } = useQuery(getAllUser);
 
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error :</p>;
+
+    // useEffect(() =>{
+    //     console.log("hI")
+    // },[])
 
     return(
         <Container className="col-md-5">

@@ -1,32 +1,7 @@
-
-
-.form-signin {
-  width: 100%;
-  max-width: 330px;
-  padding: 15px;
-  margin: auto;
+body{
+    font-family: 'Anton', sans-serif;
+    background: #fff;
 }
-
-.form-signin .checkbox {
-  font-weight: 400;
-}
-
-.form-signin .form-floating:focus-within {
-  z-index: 2;
-}
-
-.form-signin input[type="email"] {
-  margin-bottom: -1px;
-  border-bottom-right-radius: 0;
-  border-bottom-left-radius: 0;
-}
-
-.form-signin input[type="password"] {
-  margin-bottom: 10px;
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
-}
-
 
 h1{
     font-family: 'Anton', sans-serif;
@@ -63,18 +38,6 @@ h1{
 .card{
     box-shadow: 0 2px 4px rgb(0 0 0 / 10%), 0 8px 16px rgb(0 0 0 / 10%);
     border-width: 0;
-}
-
-.offscreen{
-    display: none;
-}
-
-.instructions{
-    color: red;
-}
-
-.required{
-    color: red;
 }
 
 @media only screen and (max-width: 1219px) {

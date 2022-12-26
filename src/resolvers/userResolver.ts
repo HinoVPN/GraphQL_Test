@@ -1,5 +1,7 @@
 import { Arg, Mutation, Query, Resolver } from "type-graphql";
 import {User, UserInput, UserModel} from "../class/userSchema";
+const bcrypt = require('bcrypt');
+
 @Resolver(User)
 export class UserResolver{
     constructor() {}
@@ -20,6 +22,23 @@ export class UserResolver{
         @Arg("_id") _id: string
     ) {
         return UserModel.findById(_id).exec()
+    }
+
+    @Query(() => User)
+    async login(
+        @Arg("email") email: string,
+        @Arg("password") password: string
+    ) {
+        const salt = await bcrypt.genSalt(10)
+        const hash = await bcrypt.hashSync(password, salt)
+        bcrypt.compare(password, hash, function(err:any, res:any) {
+            // console.log(res)
+        })
+
+        let result = UserModel.find({email: email}).lean()
+
+        console.log(result)
+        return result
     }
 
     @Query(() => [User])

@@ -8,5 +8,5 @@ export abstract class Base{
     @Field(type => Date) @prop({default:() => new Date(), required: true}) lastUpdateAt: Date
     @Field() @prop({default: false, required: true}) deleted: boolean
     @Field() @prop({default: null}) deletedAt: Date
-    @Field(type => ID) readonly _id: ObjectId;
+    @Field(type => ID,{nullable: true}) readonly _id: ObjectId;
 }
