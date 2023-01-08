@@ -25,7 +25,7 @@
     "strictPropertyInitialization": false,
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true,
-    "target": "es6",
+    "target": "es2018",
     "module": "commonjs",
     "esModuleInterop": true,
     "moduleResolution": "node",

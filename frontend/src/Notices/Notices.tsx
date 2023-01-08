@@ -61,7 +61,7 @@ function Notices() {
                             <Row>
                                 <Col>{description}</Col>
                                 <Col md="1" style={{fontSize:"10px",alignItems: "flex-end",display: "flex"}}>
-                                    {user != null?user.map(({name}:{name:string}) =>(<div key={name}>{name}</div>)):"No"}
+                                    {user.name}
                                 </Col>
                                 <Col xs lg="1">
                                     <Button onClick={() =>setCheckId(_id)}>Check</Button>
