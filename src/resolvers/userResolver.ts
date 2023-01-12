@@ -1,5 +1,6 @@
 import { Arg, FieldResolver, Mutation, Query, Resolver, ResolverInterface, Root } from "type-graphql";
 import {User, UserInput, UserModel} from "../class/userSchema";
+import { signJwt } from "../middleware/auth";
 const bcrypt = require('bcrypt');
 
 
@@ -35,8 +36,14 @@ export class UserResolver{
         @Arg("password") password: string
     ) {
         let result = await UserModel.findOne({email: email}).lean()
-        if(await bcrypt.compare(password, result?.password))
-            return result
+        if(!result)
+            throw new Error("No user")
+
+        if(await bcrypt.compare(password, result?.password)){
+            let jwt = signJwt({ ...result })
+            return jwt
+        }
+            
         throw new Error("Login Failed")
     }
 

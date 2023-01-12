@@ -8,6 +8,16 @@ import AuthContext from '../context/AuthProvider';
 // const PWD_REGEX = /^.*(?=.{6,})(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[!@# %^&*? ]).{8,24}$/;
 
 
+const login = gql`
+    mutation login($email:string,$password:string){
+    login(email:$email,password:$password){
+        _id
+        name
+        email
+    }
+}
+`
+
 const Login = () =>{
 
     const { setAuth } = useContext<any>(AuthContext)

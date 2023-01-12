@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken'
 
 export function signJwt(object: Object, options?:jwt.SignOptions|null){
     const user = {... object} as any
-
+    console.log(user)
     return jwt.sign(JSON.parse(JSON.stringify(user)),'hino',{...options&&options})
 }
 
