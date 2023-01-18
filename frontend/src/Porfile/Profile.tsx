@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 
-const Profile = () => {
+const Profile = (props:any) => {
   
 
   useEffect(() =>{

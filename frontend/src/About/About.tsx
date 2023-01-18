@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 
-const About = () => {
+const About = (props:any) => {
   
 
   useEffect(() =>{

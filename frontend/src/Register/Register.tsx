@@ -8,7 +8,7 @@ import "./Register.css"
 // const PWD_REGEX = /^.*(?=.{6,})(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[!@# %^&*? ]).{8,24}$/;
 
 
-const Register = () =>{
+const Register = (props:any) =>{
     
     const submit = gql`
     mutation addUser($userInfo: UserInput!) {

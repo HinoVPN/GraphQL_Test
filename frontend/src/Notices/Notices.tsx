@@ -31,13 +31,17 @@ const getAllNotices = gql`
 }
 `;
 
-function Notices() {
+function Notices(props:any) {
     const { loading, error, data } = useQuery(getAllNotices);
 
     const navigate = useNavigate();
 
 
     const [checkId, setCheckId] = useState("");
+
+    useEffect(() =>{
+        
+    })
     
     useEffect(()=>{
         if(checkId)
@@ -45,7 +49,12 @@ function Notices() {
     }, [checkId])
 
     if (loading) return <p>Loading...</p>;
-    if (error) return <p>Error</p>;
+    if (error) {
+        if(error){
+            navigate("/login")
+        }
+        return (<p>Error</p>)
+    };
 
     return(
         <Container>

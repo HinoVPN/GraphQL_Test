@@ -2,44 +2,27 @@ import { gql, useLazyQuery, useMutation, useQuery } from '@apollo/client';
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { Button } from "react-bootstrap";
 import { useNavigate } from 'react-router-dom';
-import "./global.css"
+import "../global.css"
 import AuthContext from '../context/AuthProvider';
+import { useCookies } from 'react-cookie';
 // const USER_REGEX = /^[a-zA-Z][a-zA-Z0-9-_]{3,23}$/;
 // const PWD_REGEX = /^.*(?=.{6,})(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[!@# %^&*? ]).{8,24}$/;
 
 
-const login = gql`
-    mutation login($email:string,$password:string){
-    login(email:$email,password:$password){
-        _id
-        name
-        email
-    }
+
+const getUser = gql`
+mutation login($email: String!, $password: String!) {
+    login(email: $email, password: $password) 
 }
-`
+`;
 
-const Login = () =>{
+const Login = (props:any) =>{
+    const navigate = useNavigate()
 
-    const { setAuth } = useContext<any>(AuthContext)
-    
-    const getUser = gql`
-        query login($email: String!, $password: String!) {
-            login(email: $email, password: $password) {
-                _id
-                name
-                email
-            }
-        }
-    `;
-
-    const [login ,{ data, loading, error }] = useLazyQuery(getUser);
+    const [login] = useMutation(getUser);
 
     const userRef = useRef<any>()
     const errRef = useRef<any>()
-
-    // const [user, setUser] = useState("");
-    // const [validName,setValidName] = useState(false);
-    // const [userFocus, setUserFocus] = useState(false);
 
     const [email, setEmail] = useState("")
 
@@ -50,48 +33,32 @@ const Login = () =>{
     const [errMsg, setErrMsg] = useState("");
     const [success, setSuccess] = useState(false);
     
-    const navigate = useNavigate()
 
     useEffect(()=>{
-        if(userRef.current)
+        if(props.user != null){
+            navigate("/")
+        }
+        if(userRef.current){
             userRef.current.focus()
+        }
     }, [])
 
-    // useEffect(()=>{
-    //     // const result = USER_REGEX.test(user);
-    //     const result = true
-    //     setValidName(result);
-    // }, [user])
-
     useEffect(()=>{
-        // const result = PWD_REGEX.test(password);
         const result = true
         setValidPassword(result)
     }, [password])
 
-
-    // useEffect(() =>{
-    //     if(success)
-    //         navigate("/");
-    // }, [success])
-
-    // useEffect(() =>{
-    //     console.log("hI")
-    // },[])
-
     const handleSubmit = async (e:any) => {
         e.preventDefault();
-        console.log(email,password)
-
         setSuccess(true)
-
-        login({variables:{email: email, password: password}}).then((res)=>{
-            console.log(res)
+        let token = await login({variables:{email: email, password: password}}).then((res)=>{
+            return res.data.login
+        }).catch((e) =>{
+            window.alert(e.message)
         })
-
-        // register({variables:{userInfo: data}}).then(()=>{
-        //     setSuccess(true)
-        // })
+        if(token){
+            navigate("/")
+        }
     }
 
     
@@ -111,25 +78,6 @@ const Login = () =>{
                                     onSubmit={handleSubmit}
                                     encType="multipart/form-data"
                                 >
-                                        {/* <div className='mb-3'>
-                                            <label htmlFor='username' className='form-label'>Username<span className='required'>*</span></label>
-                                            <input 
-                                                type='text' 
-                                                className='form-control' 
-                                                id='username' 
-                                                placeholder='Enter your username'
-                                                ref={userRef}
-                                                autoComplete="off"
-                                                onChange={(e) => setUser(e.target.value)}
-                                                required
-                                                aria-invalid={validName ? "false" : "true"}
-                                                aria-describedby="uidnote"
-                                                onFocus={() => setUserFocus(true)}
-                                                onBlur={() => setUserFocus(true)}
-                                            />
-                                            <p id="uidnote" className={userFocus && user && !validName ? "instructions":"offscreen"}>Error</p>
-                                        </div> */}
-                                        
                                         <div className='mb-3'>
                                             <label htmlFor='email' className='form-label'>Email<span className='required'>*</span></label>
                                             <input 
@@ -141,12 +89,7 @@ const Login = () =>{
                                                 autoComplete="off"
                                                 onChange={(e) => setEmail(e.target.value)}
                                                 required
-                                                // aria-invalid={validMatch ? "false" : "true"}
-                                                // aria-describedby="uidnote"
-                                                // onFocus={() => setMatchFocus(true)}
-                                                // onBlur={() => setMatchFocus(true)}
                                             />
-                                            {/* <p id="uidnote" className={!validMatch && matchPassword && password? "instructions":"offscreen"}>Password Not Match!</p> */}
                                         </div>
 
                                         <div className='mb-3'>

@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 
 
-export default function Notice() {
+export default function Notice(props:any) {
     const findNoticeById = gql`
         query findNoticeById($notice_id: String!){
             findNoticeById(notice_id: $notice_id){

@@ -1,4 +1,4 @@
-import { getModelForClass, pre, prop } from "@typegoose/typegoose";
+import { getModelForClass, pre, prop, Ref } from "@typegoose/typegoose";
 import { ObjectId } from "mongodb";
 import { Field,ID,InputType,ObjectType } from "type-graphql";
 import { Base, NField } from "./base";

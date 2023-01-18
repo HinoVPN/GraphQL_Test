@@ -1,4 +1,4 @@
-import { Arg, FieldResolver, Mutation, Query, Resolver, ResolverInterface, Root } from "type-graphql";
+import { Arg, Authorized, FieldResolver, Mutation, Query, Resolver, ResolverInterface, Root } from "type-graphql";
 import {Notice, NoticeInput, NoticeModel} from "../class/noticeSchema";
 import { User, UserModel } from "../class/userSchema";
 
@@ -6,11 +6,7 @@ import { User, UserModel } from "../class/userSchema";
 export class NoticeResolver{
     constructor() {}
 
-    @FieldResolver(()=>User)
-    async user(@Root() notice: Notice): Promise<User>{
-        return await UserModel.findById(notice["_doc"].userId).lean()
-    }
-
+    
     @Mutation(() => Notice)
     async createNotice(
         @Arg("noticeInfo") noticeInfo: NoticeInput
@@ -40,12 +36,15 @@ export class NoticeResolver{
         return result
     }
 
-
+    @Authorized()
     @Query(() => [Notice])
     async allNotice() {
         return await NoticeModel.find({})
     }
 
-
+    @FieldResolver(()=>User)
+    async user(@Root() notice: Notice): Promise<User>{
+        return await UserModel.findById(notice["_doc"].userId).lean()
+    }
     
 }
